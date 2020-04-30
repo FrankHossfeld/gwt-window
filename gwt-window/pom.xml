@@ -60,7 +60,7 @@
     <maven.source.plugin>3.2.1</maven.source.plugin>
 
     <elemental2.version>1.0.0-RC1</elemental2.version>
-    <gwt.http.event.version>HEAD-SNAPSHOT</gwt.http.event.version>
+    <gwt.http.version>1.0-SNAPSHOT</gwt.http.version>
     <gwt.event.logical.version>1.0-SNAPSHOT</gwt.event.logical.version>
   </properties>
 
@@ -73,8 +73,9 @@
     <dependency>
       <groupId>org.gwtproject.http</groupId>
       <artifactId>gwt-http</artifactId>
-      <version>${gwt.http.event.version>}</version>
+      <version>${gwt.http.version}</version>
     </dependency>
+
     <dependency>
       <groupId>com.google.elemental2</groupId>
       <artifactId>elemental2-dom</artifactId>

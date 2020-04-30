@@ -15,8 +15,8 @@
  */
 package org.gwtproject.user.window.client;
 
-import com.google.gwt.regexp.shared.MatchResult;
-import com.google.gwt.regexp.shared.RegExp;
+import org.gwtproject.regexp.shared.MatchResult;
+import org.gwtproject.regexp.shared.RegExp;
 import org.gwtproject.user.window.client.Window.Navigator;
 
 /**

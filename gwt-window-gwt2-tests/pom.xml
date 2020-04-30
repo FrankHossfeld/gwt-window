@@ -77,6 +77,12 @@
         <configuration>
           <failOnError>true</failOnError>
           <moduleName>org.gwtproject.window.windowGwtSuite</moduleName>
+          <testArgs>
+            <testArg>-runStyle</testArg>
+<!--            <testArg>Manual:1</testArg>-->
+            <testArg>HtmlUnit:Chrome</testArg>
+          </testArgs>
+          <style>PRETTY</style>
         </configuration>
       </plugin>
       <plugin>

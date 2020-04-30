@@ -25,8 +25,8 @@ import org.gwtproject.user.window.client.Window.Navigator;
  */
 public final class ResizeHelper {
 
-  private static int extraWidth;
-  private static int extraHeight;
+  private static final int extraWidth;
+  private static final int extraHeight;
 
   static {
     // FF4 on win can start in 'almost' fullscreen when the window title bar

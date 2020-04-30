@@ -202,7 +202,6 @@ public class WindowTest extends GWTTestCase {
    */
   @DoNotRunWith(Platform.HtmlUnitBug)
   public void testGetClientSize() {
-
     // NOTE: We must clear the DOM here so that previous tests do not pollute
     // our results.
     clearBodyContent();

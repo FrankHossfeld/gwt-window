@@ -28,21 +28,36 @@
     <vertispan.j2cl.repo.url>https://repo.vertispan.com/j2cl/</vertispan.j2cl.repo.url>
 
     <elemental2.version>1.0.0-RC1</elemental2.version>
+    <gwt.regexp.version>1.0-SNAPSHOT</gwt.regexp.version>
+    <gwt.timer.version>1.0-SNAPSHOT</gwt.timer.version>
     <j2cl.version>0.7-SNAPSHOT</j2cl.version>
   </properties>
 
   <dependencies>
     <!-- transitive dependencies that aren't correctly available at runtime -->
+<!--    <dependency>-->
+<!--      <groupId>com.google.elemental2</groupId>-->
+<!--      <artifactId>elemental2-promise</artifactId>-->
+<!--      <version>${elemental2.version}</version>-->
+<!--      <scope>test</scope>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>com.google.elemental2</groupId>-->
+<!--      <artifactId>elemental2-dom</artifactId>-->
+<!--      <version>${elemental2.version}</version>-->
+<!--      <scope>test</scope>-->
+<!--    </dependency>-->
+
     <dependency>
-      <groupId>com.google.elemental2</groupId>
-      <artifactId>elemental2-promise</artifactId>
-      <version>${elemental2.version}</version>
+      <groupId>org.gwtproject.regexp</groupId>
+      <artifactId>gwt-regexp</artifactId>
+      <version>${gwt.regexp.version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>com.google.elemental2</groupId>
-      <artifactId>elemental2-dom</artifactId>
-      <version>${elemental2.version}</version>
+   <dependency>
+      <groupId>org.gwtproject.timer</groupId>
+      <artifactId>gwt-timer</artifactId>
+      <version>${gwt.timer.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -80,6 +95,7 @@
         <version>${maven.j2cl.plugin}</version>
         <configuration>
           <compilationLevel>ADVANCED</compilationLevel>
+<!--          <compilationLevel>BUNDLED</compilationLevel>-->
         </configuration>
         <executions>
           <execution>

@@ -21,6 +21,7 @@ import com.google.gwt.junit.Platform;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Timer;
+import elemental2.core.JsDate;
 import java.util.Collection;
 import java.util.Date;
 
@@ -343,8 +344,8 @@ public class CookieTest extends GWTTestCase {
     return (long) getClientTimeImpl();
   }
 
-// TODO
-  private native double getClientTimeImpl() /*-{
-    return (new Date()).getTime();
-  }-*/;
+  private double getClientTimeImpl() {
+    JsDate date = new JsDate();
+    return date.getTime();
+  }
 }

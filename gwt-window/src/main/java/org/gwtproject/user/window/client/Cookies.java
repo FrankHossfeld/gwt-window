@@ -20,7 +20,6 @@ import static elemental2.core.Global.encodeURIComponent;
 import static elemental2.dom.DomGlobal.document;
 
 import elemental2.core.JsDate;
-import elemental2.core.JsString;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -187,7 +186,7 @@ public class Cookies {
   private static void loadCookies(HashMap<String, String> m) {
     String docCookie = document.cookie;
     if (Js.isTruthy(docCookie) && !docCookie.isEmpty()) {
-      String[] crumbs = Js.<JsString>cast(docCookie).split("; ");
+      String[] crumbs = Js.<String>cast(docCookie).split("; ");
       for (int i = crumbs.length - 1; i >= 0; --i) {
         String name, value;
         int eqIdx = crumbs[i].indexOf('=');

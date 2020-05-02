@@ -145,7 +145,7 @@ public class Cookies {
    * @param expires when the cookie expires
    */
   public static void setCookie(String name, String value, Date expires) {
-    setCookie(name, value, expires, null, null, false);
+    setCookie(name, value, expires, null, null, false, false);
   }
 
   /**
@@ -159,9 +159,30 @@ public class Cookies {
    * @param path the path to be associated with this cookie
    * @param secure <code>true</code> to make this a secure cookie (that is, only accessible over an
    *     SSL connection)
+   * @deprecated use {@link Cookies#setCookie(String, String, Date, String, String, boolean, boolean)} instead
+   */
+  @Deprecated
+  public static void setCookie(
+          String name, String value, Date expires, String domain, String path, boolean secure) {
+    setCookie(name, value, expires, domain, path, secure, false);
+  }
+
+  /**
+   * Sets a cookie. If uriEncoding is false, it checks the validity of name and value. Name: Must
+   * conform to RFC 2965. Not allowed: = , ; white space. Also can't begin with $. Value: No = or ;
+   *
+   * @param name the cookie's name
+   * @param value the cookie's value
+   * @param expires when the cookie expires
+   * @param domain the domain to be associated with this cookie
+   * @param path the path to be associated with this cookie
+   * @param secure <code>true</code> to make this a secure cookie (that is, only accessible over an
+   *     SSL connection)
+   * @param httpOnly <code>true</code> to set the HttpOnly flag and prevent client side reading of the cookie,
+   *     if the browser supports this
    */
   public static void setCookie(
-      String name, String value, Date expires, String domain, String path, boolean secure) {
+      String name, String value, Date expires, String domain, String path, boolean secure, boolean httpOnly) {
     if (uriEncoding) {
       name = encodeURIComponent(name);
       value = encodeURIComponent(value);
@@ -172,7 +193,7 @@ public class Cookies {
       throw new IllegalArgumentException(
           "Illegal cookie format: " + value + " is not a valid cookie value.");
     }
-    setCookieImpl(name, value, (expires == null) ? 0 : expires.getTime(), domain, path, secure);
+    setCookieImpl(name, value, (expires == null) ? 0 : expires.getTime(), domain, path, secure, httpOnly);
   }
 
   /** Updates the URIencode flag and empties the cached cookies set. */
@@ -279,7 +300,7 @@ public class Cookies {
   }
 
   private static void setCookieImpl(
-      String name, String value, double expires, String domain, String path, boolean secure) {
+      String name, String value, double expires, String domain, String path, boolean secure, boolean httpOnly) {
     String c = name + '=' + value;
     if (Js.isTruthy(expires)) {
       c += ";expires=" + new JsDate(expires).toGMTString();
@@ -292,6 +313,9 @@ public class Cookies {
     }
     if (secure) {
       c += ";secure";
+    }
+    if (httpOnly) {
+      c += ";HttpOnly";
     }
 
     document.cookie = c;

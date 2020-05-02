@@ -159,11 +159,12 @@ public class Cookies {
    * @param path the path to be associated with this cookie
    * @param secure <code>true</code> to make this a secure cookie (that is, only accessible over an
    *     SSL connection)
-   * @deprecated use {@link Cookies#setCookie(String, String, Date, String, String, boolean, boolean)} instead
+   * @deprecated use {@link Cookies#setCookie(String, String, Date, String, String, boolean,
+   *     boolean)} instead
    */
   @Deprecated
   public static void setCookie(
-          String name, String value, Date expires, String domain, String path, boolean secure) {
+      String name, String value, Date expires, String domain, String path, boolean secure) {
     setCookie(name, value, expires, domain, path, secure, false);
   }
 
@@ -178,11 +179,17 @@ public class Cookies {
    * @param path the path to be associated with this cookie
    * @param secure <code>true</code> to make this a secure cookie (that is, only accessible over an
    *     SSL connection)
-   * @param httpOnly <code>true</code> to set the HttpOnly flag and prevent client side reading of the cookie,
-   *     if the browser supports this
+   * @param httpOnly <code>true</code> to set the HttpOnly flag and prevent client side reading of
+   *     the cookie, if the browser supports this
    */
   public static void setCookie(
-      String name, String value, Date expires, String domain, String path, boolean secure, boolean httpOnly) {
+      String name,
+      String value,
+      Date expires,
+      String domain,
+      String path,
+      boolean secure,
+      boolean httpOnly) {
     if (uriEncoding) {
       name = encodeURIComponent(name);
       value = encodeURIComponent(value);
@@ -193,7 +200,8 @@ public class Cookies {
       throw new IllegalArgumentException(
           "Illegal cookie format: " + value + " is not a valid cookie value.");
     }
-    setCookieImpl(name, value, (expires == null) ? 0 : expires.getTime(), domain, path, secure, httpOnly);
+    setCookieImpl(
+        name, value, (expires == null) ? 0 : expires.getTime(), domain, path, secure, httpOnly);
   }
 
   /** Updates the URIencode flag and empties the cached cookies set. */
@@ -275,11 +283,7 @@ public class Cookies {
       // check not necessary
       return true;
     }
-    if (value.contains("=") || value.contains(";")) {
-      return false;
-    } else {
-      return true;
-    }
+    return !value.contains("=") && !value.contains(";");
   }
 
   private static boolean needsRefresh() {
@@ -300,7 +304,13 @@ public class Cookies {
   }
 
   private static void setCookieImpl(
-      String name, String value, double expires, String domain, String path, boolean secure, boolean httpOnly) {
+      String name,
+      String value,
+      double expires,
+      String domain,
+      String path,
+      boolean secure,
+      boolean httpOnly) {
     String c = name + '=' + value;
     if (Js.isTruthy(expires)) {
       c += ";expires=" + new JsDate(expires).toGMTString();

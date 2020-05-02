@@ -17,8 +17,6 @@ package org.gwtproject.user.window.client;
 
 import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.RepeatingCommand;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.junit.DoNotRunWith;
 import com.google.gwt.junit.Platform;
@@ -49,7 +47,7 @@ public class WindowTest extends GWTTestCase {
   private static void clearBodyContent() {
     Element bodyElem = RootPanel.getBodyElement();
 
-    List<Element> toRemove = new ArrayList<Element>();
+    List<Element> toRemove = new ArrayList<>();
     for (int i = 0, n = DOM.getChildCount(bodyElem); i < n; ++i) {
       Element elem = DOM.getChild(bodyElem, i);
       String nodeName = getNodeName(elem);
@@ -58,8 +56,8 @@ public class WindowTest extends GWTTestCase {
       }
     }
 
-    for (int i = 0, n = toRemove.size(); i < n; ++i) {
-      bodyElem.removeChild(toRemove.get(i));
+    for (Element element : toRemove) {
+      bodyElem.removeChild(element);
     }
   }
 
@@ -229,16 +227,13 @@ public class WindowTest extends GWTTestCase {
     delayTestFinish(1000);
     Scheduler.get()
         .scheduleDeferred(
-            new ScheduledCommand() {
-              @Override
-              public void execute() {
-                int newClientHeight = Window.getClientHeight();
-                int newClientWidth = Window.getClientWidth();
-                assertTrue(newClientHeight < oldClientHeight);
-                assertTrue(newClientWidth < oldClientWidth);
-                RootPanel.get().remove(largeDOM);
-                finishTest();
-              }
+            () -> {
+              int newClientHeight = Window.getClientHeight();
+              int newClientWidth = Window.getClientWidth();
+              assertTrue(newClientHeight < oldClientHeight);
+              assertTrue(newClientWidth < oldClientWidth);
+              RootPanel.get().remove(largeDOM);
+              finishTest();
             });
   }
 
@@ -290,18 +285,15 @@ public class WindowTest extends GWTTestCase {
     delayTestFinish(1000);
     Scheduler.get()
         .scheduleFixedDelay(
-            new RepeatingCommand() {
-              @Override
-              public boolean execute() {
-                if (!handler.isCalled()) {
-                  return true; // we still didn't receive the callback, let's wait more
-                }
-                assertEquals(Window.getClientWidth(), handler.getWidth());
-                assertEquals(Window.getClientHeight(), handler.getHeight());
-                handlerRegistration.removeHandler();
-                finishTest();
-                return false;
+            () -> {
+              if (!handler.isCalled()) {
+                return true; // we still didn't receive the callback, let's wait more
               }
+              assertEquals(Window.getClientWidth(), handler.getWidth());
+              assertEquals(Window.getClientHeight(), handler.getHeight());
+              handlerRegistration.removeHandler();
+              finishTest();
+              return false;
             },
             10);
   }

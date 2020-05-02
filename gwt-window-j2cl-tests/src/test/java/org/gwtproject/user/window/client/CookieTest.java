@@ -59,11 +59,11 @@ public class CookieTest {
     // Differentiate null cookie from '' cookie.
     Cookies.setCookie("novalue", "", expires);
     assertEquals("", Cookies.getCookie("novalue"));
-    assertEquals(Cookies.getCookie("notpresent"), null);
+    assertNull(Cookies.getCookie("notpresent"));
   }
 
-  //  // HTMLUnit doesn't match browsers in terms of the order of cookies.
-  //  //  @DoNotRunWith(Platform.HtmlUnitUnknown)
+  // HTMLUnit doesn't match browsers in terms of the order of cookies.
+  //  @DoNotRunWith(Platform.HtmlUnitUnknown)
   //  @Test
   //  public void testCookiesWithTheSameName() {
   //    // Make the cookie expire in one minute, so that they don't hang around
@@ -72,16 +72,23 @@ public class CookieTest {
   //
   //    // Given multiple cookies with the same name, we should pick the cookie with the longest
   //    // path.
-  //    Cookies.setCookie("token", "root", expires, null, "/", false);
+  //    Cookies.setCookie("token", "root", expires, null, "/", false, false);
   //    Cookies.setCookie(
   //        "token",
   //        "longest",
   //        expires,
   //        null,
   //        "/org.gwtproject.user.window.Window.JUnit/junit.html",
+  //        false,
   //        false);
   //    Cookies.setCookie(
-  //        "token", "middle", expires, null, "/org.gwtproject.user.window.Window.JUnit/", false);
+  //        "token",
+  //        "middle",
+  //        expires,
+  //        null,
+  //        "/org.gwtproject.user.window.Window.JUnit/",
+  //        false,
+  //        false);
   //    assertEquals("longest", Cookies.getCookie("token"));
   //  }
 
@@ -156,20 +163,20 @@ public class CookieTest {
     // Remove a cookie
     Cookies.removeCookie("test2");
     assertEquals("value1", Cookies.getCookie("test1"));
-    assertEquals(null, Cookies.getCookie("test2"));
+    assertNull(Cookies.getCookie("test2"));
     assertEquals("value3", Cookies.getCookie("test3"));
 
     // Remove another cookie
     Cookies.removeCookie("test1");
-    assertEquals(null, Cookies.getCookie("test1"));
-    assertEquals(null, Cookies.getCookie("test2"));
+    assertNull(Cookies.getCookie("test1"));
+    assertNull(Cookies.getCookie("test2"));
     assertEquals("value3", Cookies.getCookie("test3"));
 
     // Remove last cookie
     Cookies.removeCookie("test3");
-    assertEquals(null, Cookies.getCookie("test1"));
-    assertEquals(null, Cookies.getCookie("test2"));
-    assertEquals(null, Cookies.getCookie("test3"));
+    assertNull(Cookies.getCookie("test1"));
+    assertNull(Cookies.getCookie("test2"));
+    assertNull(Cookies.getCookie("test3"));
     cookies = Cookies.getCookieNames();
     assertEquals(curCount, cookies.size());
 
@@ -202,7 +209,7 @@ public class CookieTest {
     Cookies.setCookie("testencodedvalue", "value1,/?:@&=+$#");
     Cookies.setUriEncode(false);
     String encodedValue = Cookies.getCookie("testencodedvalue");
-    assertTrue(encodedValue.compareTo("value1%2C%2F%3F%3A%40%26%3D%2B%24%23") == 0);
+    assertEquals(0, encodedValue.compareTo("value1%2C%2F%3F%3A%40%26%3D%2B%24%23"));
 
     // Make sure unencoded cookies with bogus format are not added
     try {
@@ -275,29 +282,29 @@ public class CookieTest {
 
     // Set a few cookies
     int curCount = Cookies.getCookieNames().size();
-    Cookies.setCookie("test1+test1", "value1", null, null, "/", false);
-    Cookies.setCookie("test2", "value2+value2", null, null, "/", false);
-    Cookies.setCookie("test3", "value3", null, null, "/", false);
+    Cookies.setCookie("test1+test1", "value1", null, null, "/", false, false);
+    Cookies.setCookie("test2", "value2+value2", null, null, "/", false, false);
+    Cookies.setCookie("test3", "value3", null, null, "/", false, false);
     Collection<String> cookies = Cookies.getCookieNames();
     assertEquals(curCount + 3, cookies.size());
 
     // Remove a cookie
     Cookies.removeCookie("test2", "/");
     assertEquals("value1", Cookies.getCookie("test1+test1"));
-    assertEquals(null, Cookies.getCookie("test2"));
+    assertNull(Cookies.getCookie("test2"));
     assertEquals("value3", Cookies.getCookie("test3"));
 
     // Remove another cookie
     Cookies.removeCookie("test1+test1", "/");
-    assertEquals(null, Cookies.getCookie("test1+test1"));
-    assertEquals(null, Cookies.getCookie("test2"));
+    assertNull(Cookies.getCookie("test1+test1"));
+    assertNull(Cookies.getCookie("test2"));
     assertEquals("value3", Cookies.getCookie("test3"));
 
     // Remove last cookie
     Cookies.removeCookie("test3", "/");
-    assertEquals(null, Cookies.getCookie("test1+test1"));
-    assertEquals(null, Cookies.getCookie("test2"));
-    assertEquals(null, Cookies.getCookie("test3"));
+    assertNull(Cookies.getCookie("test1+test1"));
+    assertNull(Cookies.getCookie("test2"));
+    assertNull(Cookies.getCookie("test3"));
     cookies = Cookies.getCookieNames();
     assertEquals(curCount, cookies.size());
 
@@ -308,29 +315,29 @@ public class CookieTest {
     Cookies.setUriEncode(true);
 
     // Set a few cookies
-    Cookies.setCookie("test1+test1", "value1", null, null, "/", false);
-    Cookies.setCookie("test2", "value2+value2", null, null, "/", false);
-    Cookies.setCookie("test3", "value3", null, null, "/", false);
+    Cookies.setCookie("test1+test1", "value1", null, null, "/", false, false);
+    Cookies.setCookie("test2", "value2+value2", null, null, "/", false, false);
+    Cookies.setCookie("test3", "value3", null, null, "/", false, false);
     cookies = Cookies.getCookieNames();
     assertEquals(curCount + 3, cookies.size());
 
     // Remove a cookie
     Cookies.removeCookie("test2", "/");
     assertEquals("value1", Cookies.getCookie("test1+test1"));
-    assertEquals(null, Cookies.getCookie("test2"));
+    assertNull(Cookies.getCookie("test2"));
     assertEquals("value3", Cookies.getCookie("test3"));
 
     // Remove another cookie
     Cookies.removeCookie("test1+test1", "/");
-    assertEquals(null, Cookies.getCookie("test1+test1"));
-    assertEquals(null, Cookies.getCookie("test2"));
+    assertNull(Cookies.getCookie("test1+test1"));
+    assertNull(Cookies.getCookie("test2"));
     assertEquals("value3", Cookies.getCookie("test3"));
 
     // Remove last cookie
     Cookies.removeCookie("test3", "/");
-    assertEquals(null, Cookies.getCookie("test1+test1"));
-    assertEquals(null, Cookies.getCookie("test2"));
-    assertEquals(null, Cookies.getCookie("test3"));
+    assertNull(Cookies.getCookie("test1+test1"));
+    assertNull(Cookies.getCookie("test2"));
+    assertNull(Cookies.getCookie("test3"));
     cookies = Cookies.getCookieNames();
     assertEquals(curCount, cookies.size());
   }

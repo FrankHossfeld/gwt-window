@@ -148,7 +148,7 @@ public class Window {
       Map<String, List<String>> params = getParameterMap();
       for (Map.Entry<String, List<String>> entry : params.entrySet()) {
         List<String> values = new ArrayList<>(entry.getValue());
-        builder.setParameter(entry.getKey(), values.toArray(new String[values.size()]));
+        builder.setParameter(entry.getKey(), values.toArray(new String[0]));
       }
 
       return builder;

@@ -11,13 +11,13 @@ to prepare for GWT 3 / J2Cl.
 ```xml
 <dependency>
     <groupId>org.gwtproject.user.window</groupId>
-    <artifactId>gwt-timer</artifactId>
+    <artifactId>gwt-window</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
 
 ### Instructions
-To build gwt-timer:
+To build gwt-window:
 
 * run `mvn clean install`
 
@@ -25,6 +25,6 @@ on the parent directory.
 
 To run the j2cl tests:
 
-* switch to the 'gwt-timer-j2cl-tests' directory
+* switch to the 'gwt-window-j2cl-tests' directory
 * run `mvn j2cl:clean` & `mvn j2cl:test`
 
